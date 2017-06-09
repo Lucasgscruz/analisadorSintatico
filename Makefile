@@ -1,2 +1,4 @@
 compilar:
-	python ./src/lexico.py ./entrada/helloWorld.c
+	python ./src/compilador.py ./entrada/arq.c
+limpar:
+	rm ./src/*.pyc

@@ -22,4 +22,5 @@ if __name__ != '__main__':
     def writeTable(simbolo):
         """Função que armazena os símbolos no arquivo de saida, saída
          de símbolos."""
+         
         saida.write(str(simbolo) + '\n')
