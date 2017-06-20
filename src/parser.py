@@ -19,6 +19,7 @@ if __name__ != '__main__':
     def F(tokens):
         #print ' entrou F'
         global i
+        print tokens[i]
         if(re.match(r'^[a-zA-z0-9_]', tokens[i]) or
            re.match(r'^[-0-9.]+$', tokens[i])):   # Terminal
             i += 1
@@ -41,7 +42,7 @@ if __name__ != '__main__':
             i += 1
             T(tokens)
             Elinha(tokens)
-        elif(tokens[i] == '$' or tokens[i] == ')' or tokens[i] == ';' or tokens[i] == 'f'):
+        elif(tokens[i] == ';' or tokens[i] == ')'):
             pass
         else:
             print 'Erro na funçao Elinha!'
@@ -54,8 +55,7 @@ if __name__ != '__main__':
             i += 1
             F(tokens)
             Tlinha(tokens)
-        elif(tokens[i] == '$' or tokens[i] == '+'
-             or tokens[i] == ')' or tokens[i] == ';' or tokens[i] == 'f'):
+        elif(tokens[i] == ';' or tokens[i] == '+' or tokens[i] == ')'):
             pass
         else:
             print 'Erro na funçao Tlinha!'
@@ -66,7 +66,7 @@ if __name__ != '__main__':
         return 1
 
     def valor(tokens):
-        if(expressao(tokens)): # Se for expressao, numero ou id
+        if(expressao(tokens)): # Se for expressao
             pass
         else:
             print 'Atribuicao invalida!'
@@ -80,7 +80,7 @@ if __name__ != '__main__':
             if(tokens[i] == '='): # <ATTRIB>
                 i += 1
                 valor(tokens)
-                if(tokens[i] == ';'): # <;>
+                if(tokens[i] == ';'):
                     i += 1
                 else:
                     print 'Erro! Falta um ponto e virgula'
@@ -91,10 +91,6 @@ if __name__ != '__main__':
 
     def programa(tokens):
         global i
-        tokens = ['a', '=', '3','*','a', ';']
-        tokens.append('$')
-
-
         while (i < len(tokens)):
             # Se o token for um identificador é uma atribuição
             if(re.match(r'^[a-zA-z0-9_]+$', tokens[i])):

@@ -4,9 +4,10 @@
 if __name__ != '__main__':
 
     __dicErros__ = {
-        00: "[Erro]: Arquivo contendo o código fonte não foi passado!",
+        00: "[Erro]: O arquivo contendo o código fonte não foi passado!",
         01: "[Erro]: O arquivo passado possui extensão incompatível.",
-        02: "[Erro]: Erro lexico na linha "
+        02: "[Erro]: Erro lexico na linha ",
+        03: "[Erro]: Erro sintatico na linha"
     }
 
     __listaErros__ = []

@@ -6,8 +6,11 @@ from files import *
 import re
 
 if __name__ != '__main__':
-    
+
     def findTokens(source):
+        """
+        Retorna a lista de tokens do codigo fonte.
+        """
         i = 0
         linha = 1
         coluna = 1
@@ -104,36 +107,46 @@ if __name__ != '__main__':
 
 
     def findErros(tokens):
+        erro = 0
         for lexema in tokens:
             # Encontrar identificadores errados
             if(re.match(r'([\d]+[a-zA-z_]+)', lexema[0])):
                 setListaErros(getErro(02, lexema[1], lexema[2]))
+                erro = 1
             if(lexema[0] in logicos and
             ((tokens[tokens.index(lexema) + 1][0] in logicos) or
                 (tokens[tokens.index(lexema) + 1][0] in aritmeticos)) and
                 ((tokens[tokens.index(lexema) + 2][0] in logicos) or
                 (tokens[tokens.index(lexema) + 2][0] in aritmeticos))):
                 setListaErros(getErro(02, lexema[1], lexema[2]))
+                erro = 1
 
         for i in (getListaErros()):
             print i
 
+        if(erro == 1):
+            return 1
+        return 0
+
     def makeTable(tokens):
+        """
+        Constroi tabala de tokens.
+        """
         for i in tokens:
             if (i[0] in reservadas):
                 writeTable(['[RESERVADA]', i[1], i[2]])
-        
+
             elif(i[0] in aritmeticos):
                 writeTable(['[ARITM]', i[1], i[2]])
-        
+
             elif (i[0] in delimitadores):
                 writeTable(['[DELIMITADOR]', i[1], i[2]])
-        
+
             elif(i[0] in logicos):
                 writeTable(['[LOGICO]', i[1], i[2]])
-        
+
             elif (re.match(r'^[-0-9.]+$', i[0])):
                 writeTable(['[NUM]', i[1], i[2]])
-        
+
             elif (re.match(r'^[a-zA-z0-9_]+$', i[0])):
                 writeTable(['[IDENTIFICADOR]', i[1], i[2]])

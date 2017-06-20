@@ -17,10 +17,10 @@ if __name__ != '__main__':
         """Função que realiza a leitura do código fonte."""
 
         arq = open(source, 'r')
-        return arq.read()
+        return arq.read() + ' '
 
     def writeTable(simbolo):
         """Função que armazena os símbolos no arquivo de saida, saída
          de símbolos."""
-         
+
         saida.write(str(simbolo) + '\n')
