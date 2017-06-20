@@ -105,12 +105,16 @@ if __name__ != '__main__':
     def declaracao(tokens):
         global i
         i += 1
-        if(re.match(r'^[a-zA-z0-9_]+$', tokens[i])): # <ID>
+
+        if(re.match(r'^[a-zA-z0-9_]+$', tokens[i]) or atribDec(tokens)): # <ID>
             i += 1
-            if(tokens[i] == ','):
+            if(tokens[i] == ','): # Multiplas declarações
                 dec2(tokens)
-            if(tokens[i] == ';'):
+            if(tokens[i] == ';'): # Declaração simples
                 i += 1
+            if(tokens[i] == '='): # Declaração com atribuicao
+                i -= 1
+                atribuicao(tokens)
             else:
                 print 'Erro!'
                 sys.exit()
@@ -120,7 +124,7 @@ if __name__ != '__main__':
 
     def programa(tokens):
         global i
-        tokens = ['int', 'a', ',', 'b', ';']
+        tokens = ['int', 'a', '=', '0', ';']
         tokens.append('$')
 
         while (i < len(tokens)):

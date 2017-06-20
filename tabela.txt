@@ -1,5 +1,0 @@
-['[RESERVADA]', 1, 3]
-['[IDENTIFICADOR]', 1, 5]
-['[LOGICO]', 1, 7]
-['[NUM]', 1, 9]
-['[DELIMITADOR]', 1, 10]
