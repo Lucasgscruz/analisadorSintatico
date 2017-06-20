@@ -3,7 +3,7 @@
 import os
 
 if __name__ != '__main__':
-    saida = open("tabela.txt",'w')
+    saida = open("tabela.txt", 'w')
 
     def checarExtensao(source):
         """Função que verifica a extensão do arquivo passado com o código fonte."""

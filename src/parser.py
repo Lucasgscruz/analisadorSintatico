@@ -7,26 +7,26 @@ if __name__ != '__main__':
     i = 0
 
     def E(tokens):
-        #print ' entrou E'
+        # print ' entrou E'
         T(tokens)
         Elinha(tokens)
 
     def T(tokens):
-        #print ' entrou  T'
+        # print ' entrou  T'
         F(tokens)
         Tlinha(tokens)
 
     def F(tokens):
-        #print ' entrou F'
+        # print ' entrou F'
         global i
         print tokens[i]
         if(re.match(r'^[a-zA-z0-9_]', tokens[i]) or
            re.match(r'^[-0-9.]+$', tokens[i])):   # Terminal
             i += 1
-        elif(tokens[i] == '('): # Terminal
+        elif(tokens[i] == '('):  # Terminal
             i += 1
             E(tokens)
-            if(tokens[i] == ')'): # Terminal
+            if(tokens[i] == ')'):  # Terminal
                 i += 1
             else:
                 "Erro na função F! Parenteses nao fechado!"
@@ -36,7 +36,7 @@ if __name__ != '__main__':
             sys.exit()
 
     def Elinha(tokens):
-        #print ' entrou E_ '
+        # print ' entrou E_ '
         global i
         if(tokens[i] == '+'):
             i += 1
@@ -49,7 +49,7 @@ if __name__ != '__main__':
             sys.exit()
 
     def Tlinha(tokens):
-        #print ' entrou T_ '
+        # print ' entrou T_ '
         global i
         if(tokens[i] == '*'):
             i += 1
@@ -66,18 +66,17 @@ if __name__ != '__main__':
         return 1
 
     def valor(tokens):
-        if(expressao(tokens)): # Se for expressao
+        if(expressao(tokens)):  # Se for expressao
             pass
         else:
             print 'Atribuicao invalida!'
             sys.exit()
 
-
     def atribuicao(tokens):
         global i
-        if(re.match(r'^[a-zA-z0-9_]+$', tokens[i])): # <ID>
+        if(re.match(r'^[a-zA-z0-9_]+$', tokens[i])):  # <ID>
             i += 1
-            if(tokens[i] == '='): # <ATTRIB>
+            if(tokens[i] == '='):  # <ATTRIB>
                 i += 1
                 valor(tokens)
                 if(tokens[i] == ';'):

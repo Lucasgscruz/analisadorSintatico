@@ -51,26 +51,27 @@ if __name__ != '__main__':
                             i += 2
 
                 if(i + 1 < len(source)):
-                    if(re.match(r'^[a-zA-z0-9_]+$', tokenAux)):  # Pode ser um identificador ou uma palavra reservada.
+                    # Pode ser um identificador ou uma palavra reservada.
+                    if(re.match(r'^[a-zA-z0-9_]+$', tokenAux)):
                         if((source[i + 1] in delimitadores) or
-                        (source[i + 1] in aritmeticos) or
-                        (source[i + 1] in logicos) or
-                        source[i + 1] == "\n"):
+                           (source[i + 1] in aritmeticos) or
+                            (source[i + 1] in logicos) or
+                           source[i + 1] == "\n"):
                             tokens.append([tokenAux, linha, coluna])
                             tokenAux = ""
-
-                    if(re.match(r'([-\d]+[.]*[\d]+)', tokenAux)):  # verifica numeros
+                    # verifica numeros
+                    if(re.match(r'([-\d]+[.]*[\d]+)', tokenAux)):
                         if((source[i + 1] in delimitadores) or
                             (source[i + 1] in aritmeticos) or
                             (source[i + 1] in logicos) or
-                        source[i + 1] == '\n'):
+                           source[i + 1] == '\n'):
                             tokens.append([tokenAux, linha, coluna])
                             tokenAux = ""
 
                     if(tokenAux == '='):    # verifica atribuição
                         if(re.match(r'([-\d]+[.]*[\d]+)', source[i + 1]) or
-                        re.match(r'^[a-zA-z0-9_]+$', source[i + 1]) or
-                        source[i + 1] == ' '):
+                           re.match(r'^[a-zA-z0-9_]+$', source[i + 1]) or
+                           source[i + 1] == ' '):
                             tokens.append([tokenAux, linha, coluna])
                             tokenAux = ""
 
@@ -84,9 +85,9 @@ if __name__ != '__main__':
 
                     if(tokenAux in logicos):  # verifica logicos
                         if(str(tokenAux + source[i + 1] in uniaoLogicos) or
-                        source[i + 1] == ' ' or
-                        source[i + 1] == r'([-\d]+[.]*[\d]+)' or
-                        source[i + 1] == r'^[a-zA-z]+$'):
+                           source[i + 1] == ' ' or
+                           source[i + 1] == r'([-\d]+[.]*[\d]+)' or
+                           source[i + 1] == r'^[a-zA-z]+$'):
 
                         # Reconhecimento de dois simbolos logicos juntos
                         #    if(re.match(r'^[-0-9.]+$', source[i+1])):
@@ -105,7 +106,6 @@ if __name__ != '__main__':
             print j
         return tokens
 
-
     def findErros(tokens):
         erro = 0
         for lexema in tokens:
@@ -114,10 +114,10 @@ if __name__ != '__main__':
                 setListaErros(getErro(02, lexema[1], lexema[2]))
                 erro = 1
             if(lexema[0] in logicos and
-            ((tokens[tokens.index(lexema) + 1][0] in logicos) or
+               ((tokens[tokens.index(lexema) + 1][0] in logicos) or
                 (tokens[tokens.index(lexema) + 1][0] in aritmeticos)) and
                 ((tokens[tokens.index(lexema) + 2][0] in logicos) or
-                (tokens[tokens.index(lexema) + 2][0] in aritmeticos))):
+                 (tokens[tokens.index(lexema) + 2][0] in aritmeticos))):
                 setListaErros(getErro(02, lexema[1], lexema[2]))
                 erro = 1
 
