@@ -1,4 +1,4 @@
 compilar:
-	python ./src/compilador.py ./entrada/arq.c
+	python ./src/compilador.py ./entrada/helloWorld.c
 limpar:
 	rm ./src/*.pyc

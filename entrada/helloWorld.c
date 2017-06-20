@@ -1,13 +1,14 @@
-int main() {
-  int a= -90;
-  int d=0;
-  float lucas = 7.54; //Comentario
-  a >= 9 ;
-  for(d=0 ;d<=10 ;d= d+1){
-    printf("Hello World!",d);
+int b = 0;
+int a;
+a= a + 5 * b;
+
+while (a+5) {
+  n = 8+c*9;
+  if(a+b){
+      int a;
   }
-  return 0;
+  /*comentario*/
 }
-/*Comentario
-sdfsdfsdfs
-sdfsfdsdfsdf*/
+if(5+2){
+
+}

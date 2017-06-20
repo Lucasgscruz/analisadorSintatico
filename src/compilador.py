@@ -24,7 +24,7 @@ def main():
     erro = lexico.findErros(tokens)     # Encontrar erros lexicos
     lexico.makeTable(tokens)           # Construir arquivo com tabela de tokens
     if(erro == 0):                     # Se não foram encontrados erros léxicos
-        sintatico.programa(['a', '=', '3', '+', 'a', ';'])
+        sintatico.programa(tokens)
 
 
 if __name__ == '__main__':

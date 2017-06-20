@@ -21,46 +21,47 @@ if __name__ != '__main__':
     def F(tokens):
         # print ' entrou F'
         global i
-        if(re.match(r'^[a-zA-z0-9_]', tokens[i]) or
-           re.match(r'^[-0-9.]+$', tokens[i])):   # Terminal
+        if(re.match(r'^[a-zA-z0-9_]', tokens[i][0]) or
+           re.match(r'^[-0-9.]+$', tokens[i][0])):   # Terminal
             i += 1
-        elif(tokens[i] == '('):  # Terminal
+        elif(tokens[i][0] == '('):  # Terminal
             i += 1
             E(tokens)
-            if(tokens[i] == ')'):  # Terminal
+            if(tokens[i][0] == ')'):  # Terminal
                 i += 1
             else:
-                "Erro na função F! Parenteses nao fechado!"
+                print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
                 sys.exit()
         else:
-            print "Erro na funcao F!"
+            print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
             sys.exit()
 
     def Elinha(tokens):
         # print ' entrou E_ '
         global i
-        if(tokens[i] == '+'):
+        if(tokens[i][0] == '+'):
             i += 1
             T(tokens)
             Elinha(tokens)
-        elif(tokens[i] == '$' or tokens[i] == ')' or tokens[i] == ';' or tokens[i] == 'f'):
+        elif(tokens[i][0] == '$' or tokens[i][0] == ')' or tokens[i][0] == ';'
+             or tokens[i][0] == '{'):
             pass
         else:
-            print 'Erro na funçao Elinha!'
+            print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
             sys.exit()
 
     def Tlinha(tokens):
         # print ' entrou T_ '
         global i
-        if(tokens[i] == '*'):
+        if(tokens[i][0] == '*'):
             i += 1
             F(tokens)
             Tlinha(tokens)
-        elif(tokens[i] == '$' or tokens[i] == '+'
-             or tokens[i] == ')' or tokens[i] == ';' or tokens[i] == 'f'):
+        elif(tokens[i][0] == '$' or tokens[i][0] == '+'
+             or tokens[i][0] == ')' or tokens[i][0] == ';' or tokens[i][0] == '{'):
             pass
         else:
-            print 'Erro na funçao Tlinha!'
+            print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
             sys.exit()
 
     def expressao(tokens):
@@ -71,70 +72,146 @@ if __name__ != '__main__':
         if(expressao(tokens)):  # Se for expressao, numero ou id
             pass
         else:
-            print 'Atribuicao invalida!'
+            print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
             sys.exit()
 
     def atribuicao(tokens):
         global i
-        if(re.match(r'^[a-zA-z0-9_]+$', tokens[i])):  # <ID>
+        if(re.match(r'^[a-zA-z0-9_]+$', tokens[i][0])):  # <ID>
             i += 1
-            if(tokens[i] == '='):  # <ATTRIB>
+            if(tokens[i][0] == '='):  # <ATTRIB>
                 i += 1
                 valor(tokens)
-                if(tokens[i] == ';'):  # <;>
+                if(tokens[i][0] == ';'):  # <;>
                     i += 1
                 else:
-                    print 'Erro! Falta um ponto e virgula'
+                    print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
                     sys.exit()
             else:
-                print 'Erro! Falta o sinal de ='
+                print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
                 sys.exit()
 
     def dec2(tokens):
         global i
         i += 1
-        if(re.match(r'^[a-zA-z0-9_]+$', tokens[i])): # <ID>
+        if(re.match(r'^[a-zA-z0-9_]+$', tokens[i][0])): # <ID>
             i += 1
-            if(tokens[i] == ';'):
+            if(tokens[i][0] == ';'):
                 pass
-            elif(tokens[i] == ','): # Se for outra virgula
+            elif(tokens[i][0] == ','): # Se for outra virgula
                 dec2(tokens)
             else:
-                print 'Erro no dc2'
+                print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
+                sys.exit()
+        else:
+            print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
+            sys.exit()
 
     def declaracao(tokens):
         global i
         i += 1
-
-        if(re.match(r'^[a-zA-z0-9_]+$', tokens[i]) or atribDec(tokens)): # <ID>
+        if(re.match(r'^[a-zA-z0-9_]+$', tokens[i][0])): # <ID>
             i += 1
-            if(tokens[i] == ','): # Multiplas declarações
+            if(tokens[i][0] == ','): # Multiplas declarações
                 dec2(tokens)
-            if(tokens[i] == ';'): # Declaração simples
+            elif(tokens[i][0] == ';'): # Declaração simples
                 i += 1
-            if(tokens[i] == '='): # Declaração com atribuicao
+            elif(tokens[i][0] == '='): # Declaração com atribuicao
                 i -= 1
                 atribuicao(tokens)
             else:
-                print 'Erro!'
+                print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
                 sys.exit()
         else:
-            print 'Erro'
+            print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
+            sys.exit()
+
+    def bloco(tokens):
+        global i
+        while (tokens[i][0] != '}'):
+            # Se o token for uma palavra reservada é uma declaracao
+            if(tokens[i][0] == 'int' or tokens[i][0] == 'float' or tokens[i][0] == 'char'):
+                declaracao(tokens)
+
+            # Se o token for uma repetiçao
+            elif(tokens[i][0] == 'while'):
+                repeticao(tokens)
+
+            #Se o token for uma condicao
+            elif(tokens[i][0] == 'if'):
+                condicao(tokens)
+
+            # Se o token for um identificador é uma atribuição
+            elif(re.match(r'^[a-zA-z0-9_]+$', tokens[i][0])):
+                atribuicao(tokens)
+
+
+    def repeticao(tokens):
+        global i
+        i += 1
+        if(expressao(tokens)):
+            if(tokens[i][0] == '{'):
+                i += 1
+                bloco(tokens)
+                if(tokens[i][0] == '}'):
+                    i += 1
+                else:
+                    print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
+                    sys.exit()
+            else:
+                print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
+                sys.exit()
+        else:
+            print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
+            sys.exit()
+
+    def condicao(tokens):
+        global i
+        i += 1
+        if(expressao(tokens)):
+            if(tokens[i][0] == '{'):
+                i += 1
+                bloco(tokens)
+                if(tokens[i][0] == '}'):
+                    i += 1
+                else:
+                    print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
+                    sys.exit()
+            else:
+                print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
+                sys.exit()
+        else:
+            print 'Expressao invalida!'
             sys.exit()
 
     def programa(tokens):
+        """
+        Funçao para reconhecimento dos tipos de tokens.
+        """
         global i
-        tokens = ['int', 'a', '=', '0', ';']
         tokens.append('$')
 
         while (i < len(tokens)):
+            if(tokens[i][0] == '$'):
+                i += 1
+                pass
             # Se o token for uma palavra reservada é uma declaracao
-            if(tokens[i] == 'int' or tokens[i] == 'float' or tokens[i] == 'char'):
+            elif(tokens[i][0] == 'int' or tokens[i][0] == 'float' or tokens[i][0] == 'char'):
                 declaracao(tokens)
 
+            # Se o token for uma repetiçao
+            elif(tokens[i][0] == 'while'):
+                repeticao(tokens)
+
+            #Se o token for uma condicao
+            elif(tokens[i][0] == 'if'):
+                condicao(tokens)
+
             # Se o token for um identificador é uma atribuição
-            elif(re.match(r'^[a-zA-z0-9_]+$', tokens[i])):
+            elif(re.match(r'^[a-zA-z0-9_]+$', tokens[i][0])):
                 atribuicao(tokens)
-            i += 1
+
+            else:
+                i += 1
         else:
-            print 'Analise sintatica concluida! Nenhum erro detectado!'
+            print 'Analises léxica e sintatica concluidas! Nenhum erro detectado!'
