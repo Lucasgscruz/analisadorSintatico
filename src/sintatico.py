@@ -90,32 +90,47 @@ if __name__ != '__main__':
                 print 'Erro! Falta o sinal de ='
                 sys.exit()
 
+    def dec2(tokens):
+        global i
+        i += 1
+        if(re.match(r'^[a-zA-z0-9_]+$', tokens[i])): # <ID>
+            i += 1
+            if(tokens[i] == ';'):
+                pass
+            elif(tokens[i] == ','): # Se for outra virgula
+                dec2(tokens)
+            else:
+                print 'Erro no dc2'
+
     def declaracao(tokens):
         global i
         i += 1
-        if(re.match(r'^[a-zA-z0-9_]+$', tokens[i])):
+        if(re.match(r'^[a-zA-z0-9_]+$', tokens[i])): # <ID>
             i += 1
-            if (tokens[i] == ';'):
+            if(tokens[i] == ','):
+                dec2(tokens)
+            if(tokens[i] == ';'):
                 i += 1
             else:
                 print 'Erro!'
+                sys.exit()
         else:
             print 'Erro'
+            sys.exit()
 
     def programa(tokens):
         global i
-        tokens = ['int', 'a', ';']
+        tokens = ['int', 'a', ',', 'b', ';']
         tokens.append('$')
 
         while (i < len(tokens)):
+            # Se o token for uma palavra reservada é uma declaracao
             if(tokens[i] == 'int' or tokens[i] == 'float' or tokens[i] == 'char'):
                 declaracao(tokens)
 
             # Se o token for um identificador é uma atribuição
             elif(re.match(r'^[a-zA-z0-9_]+$', tokens[i])):
                 atribuicao(tokens)
-
-
             i += 1
         else:
-            print 'Encerrou a execuçao com sucesso!'
+            print 'Analise sintatica concluida! Nenhum erro detectado!'
