@@ -9,17 +9,14 @@ if __name__ != '__main__':
     i = 0
 
     def E(tokens):
-        # print ' entrou E'
         T(tokens)
         Elinha(tokens)
 
     def T(tokens):
-        # print ' entrou  T'
         F(tokens)
         Tlinha(tokens)
 
     def F(tokens):
-        # print ' entrou F'
         global i
         if(re.match(r'^[a-zA-z0-9_]', tokens[i][0]) or
            re.match(r'^[-0-9.]+$', tokens[i][0])):   # Terminal
@@ -37,7 +34,6 @@ if __name__ != '__main__':
             sys.exit()
 
     def Elinha(tokens):
-        # print ' entrou E_ '
         global i
         if(tokens[i][0] == '+'):
             i += 1
@@ -51,7 +47,6 @@ if __name__ != '__main__':
             sys.exit()
 
     def Tlinha(tokens):
-        # print ' entrou T_ '
         global i
         if(tokens[i][0] == '*'):
             i += 1
@@ -85,6 +80,7 @@ if __name__ != '__main__':
                 if(tokens[i][0] == ';'):  # <;>
                     i += 1
                 else:
+                    i -= 1
                     print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
                     sys.exit()
             else:
@@ -177,11 +173,22 @@ if __name__ != '__main__':
                 else:
                     print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
                     sys.exit()
+                if(tokens[i][0] == 'else'):
+                    i += 1
+                    if(tokens[i][0] == '{'):
+                        i += 1
+                        bloco(tokens)
+                        if(tokens[i][0] == '}'):
+                            i += 1
+                        else:
+                            print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
+                            sys.exit()
             else:
                 print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
                 sys.exit()
         else:
-            print 'Expressao invalida!'
+            print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ',
+            tokens[i][2],' - Expressao invalida!'
             sys.exit()
 
     def programa(tokens):

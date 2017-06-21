@@ -1,11 +1,15 @@
 int b = 0;
+
 int a;
 a= a + 5 * b;
 
 while (a+5) {
   n = 8+c*9;
   if(a+b){
-      int a;
+      int k;
+  }
+  else{
+  k = 0;
   }
   /*comentario*/
 }
