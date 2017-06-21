@@ -1,6 +1,6 @@
 int b = 0;
 
-int a;
+int a,u,t;
 a= a + 5 * b;
 
 while (a+5) {

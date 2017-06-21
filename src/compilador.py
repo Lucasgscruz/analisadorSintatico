@@ -22,8 +22,8 @@ def main():
     source = readSource(sys.argv[1])    # Ler código fonte
     tokens = lexico.findTokens(source)  # Encontrar tokens
     erro = lexico.findErros(tokens)     # Encontrar erros lexicos
-    lexico.makeTable(tokens)           # Construir arquivo com tabela de tokens
     if(erro == 0):                     # Se não foram encontrados erros léxicos
+        lexico.makeTable(tokens)           # Construir arquivo com tabela de tokens
         sintatico.programa(tokens)
 
 
