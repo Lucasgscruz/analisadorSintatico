@@ -60,6 +60,9 @@ if __name__ != '__main__':
             sys.exit()
 
     def expressao(tokens):
+        """
+        Realiza verificação da validade de expressões aritmeticas.
+        """
         E(tokens)
         return 1
 
@@ -221,4 +224,4 @@ if __name__ != '__main__':
             else:
                 i += 1
         else:
-            print 'Analises léxica e sintatica concluidas! Nenhum erro detectado!'
+            print '\nAnalises léxica e sintatica concluidas! Nenhum erro detectado!'
