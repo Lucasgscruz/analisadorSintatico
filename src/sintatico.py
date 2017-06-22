@@ -206,7 +206,6 @@ if __name__ != '__main__':
         while (i < len(tokens)):
             if(tokens[i][0] == '$'):
                 i += 1
-                pass
             # Se o token for uma palavra reservada é uma declaracao
             elif(tokens[i][0] == 'int' or tokens[i][0] == 'float' or tokens[i][0] == 'char'):
                 declaracao(tokens)
