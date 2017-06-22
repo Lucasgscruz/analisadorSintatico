@@ -23,7 +23,8 @@ def main():
     tokens = lexico.findTokens(source)  # Encontrar tokens
     erro = lexico.findErros(tokens)     # Encontrar erros lexicos
     if(erro == 0):                     # Se não foram encontrados erros léxicos
-        lexico.makeTable(tokens)           # Construir arquivo com tabela de tokens
+        lexico.makeTable(tokens)
+                         # Construir arquivo com tabela de tokens
         sintatico.programa(tokens)
 
 

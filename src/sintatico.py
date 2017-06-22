@@ -93,11 +93,11 @@ if __name__ != '__main__':
     def dec2(tokens):
         global i
         i += 1
-        if(re.match(r'^[a-zA-z0-9_]+$', tokens[i][0])): # <ID>
+        if(re.match(r'^[a-zA-z0-9_]+$', tokens[i][0])):  # <ID>
             i += 1
             if(tokens[i][0] == ';'):
                 pass
-            elif(tokens[i][0] == ','): # Se for outra virgula
+            elif(tokens[i][0] == ','):  # Se for outra virgula
                 dec2(tokens)
             else:
                 print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
@@ -109,13 +109,13 @@ if __name__ != '__main__':
     def declaracao(tokens):
         global i
         i += 1
-        if(re.match(r'^[a-zA-z0-9_]+$', tokens[i][0])): # <ID>
+        if(re.match(r'^[a-zA-z0-9_]+$', tokens[i][0])):  # <ID>
             i += 1
-            if(tokens[i][0] == ','): # Multiplas declarações
+            if(tokens[i][0] == ','):  # Multiplas declarações
                 dec2(tokens)
-            elif(tokens[i][0] == ';'): # Declaração simples
+            elif(tokens[i][0] == ';'):  # Declaração simples
                 i += 1
-            elif(tokens[i][0] == '='): # Declaração com atribuicao
+            elif(tokens[i][0] == '='):  # Declaração com atribuicao
                 i -= 1
                 atribuicao(tokens)
             else:
@@ -136,14 +136,13 @@ if __name__ != '__main__':
             elif(tokens[i][0] == 'while'):
                 repeticao(tokens)
 
-            #Se o token for uma condicao
+            # Se o token for uma condicao
             elif(tokens[i][0] == 'if'):
                 condicao(tokens)
 
             # Se o token for um identificador é uma atribuição
             elif(re.match(r'^[a-zA-z0-9_]+$', tokens[i][0])):
                 atribuicao(tokens)
-
 
     def repeticao(tokens):
         global i
@@ -186,12 +185,15 @@ if __name__ != '__main__':
                         else:
                             print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
                             sys.exit()
+                    else:
+                        print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
+                        sys.exit()
             else:
                 print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ', tokens[i][2]
                 sys.exit()
         else:
             print '[Erro] Erro sintatico: linha ', tokens[i][1], 'coluna ',
-            tokens[i][2],' - Expressao invalida!'
+            tokens[i][2], ' - Expressao invalida!'
             sys.exit()
 
     def programa(tokens):
@@ -213,7 +215,7 @@ if __name__ != '__main__':
             elif(tokens[i][0] == 'while'):
                 repeticao(tokens)
 
-            #Se o token for uma condicao
+            # Se o token for uma condicao
             elif(tokens[i][0] == 'if'):
                 condicao(tokens)
 
