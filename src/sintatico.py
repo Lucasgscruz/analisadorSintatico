@@ -39,6 +39,10 @@ if __name__ != '__main__':
             i += 1
             T(tokens)
             Elinha(tokens)
+        elif(tokens[i][0] == '-'):
+            i += 1
+            T(tokens)
+            Elinha(tokens)
         elif(tokens[i][0] == '$' or tokens[i][0] == ')' or tokens[i][0] == ';'
              or tokens[i][0] == '{'):
             pass
@@ -52,7 +56,11 @@ if __name__ != '__main__':
             i += 1
             F(tokens)
             Tlinha(tokens)
-        elif(tokens[i][0] == '$' or tokens[i][0] == '+'
+        elif(tokens[i][0] == '/'):
+            i += 1
+            F(tokens)
+            Tlinha(tokens)
+        elif(tokens[i][0] == '$' or tokens[i][0] == '+' or tokens[i][0] == '-'
              or tokens[i][0] == ')' or tokens[i][0] == ';' or tokens[i][0] == '{'):
             pass
         else:
