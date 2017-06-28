@@ -6,7 +6,8 @@ a= a + 5 * b;
 while (a+5) {
   n = 8+c*9;
   if(a+b){
-      int k;
+      int k,u;
+      int aaa;
   }
   else{
   k = 0;

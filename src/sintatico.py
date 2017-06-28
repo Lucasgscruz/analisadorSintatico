@@ -96,6 +96,7 @@ if __name__ != '__main__':
         if(re.match(r'^[a-zA-z0-9_]+$', tokens[i][0])):  # <ID>
             i += 1
             if(tokens[i][0] == ';'):
+                i += 1
                 pass
             elif(tokens[i][0] == ','):  # Se for outra virgula
                 dec2(tokens)
